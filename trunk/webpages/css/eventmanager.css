@@ -1,0 +1,63 @@
+﻿/**
+ * eventmanager.css
+ */
+@import "default.css";
+
+/**
+ * Structure styles
+ */
+#eventlist {
+  width: 1050px;
+  border: 1px solid red;
+}
+#currencylist {
+  width: 400px;
+  border: 1px solid red;
+}
+#currencypairlist {
+  width: 300px;
+  border: 1px solid red;
+}
+.fxcontrols-box {
+  border: 1px solid blue;
+  height: 35px;
+  padding-bottom: 5px;
+  padding-left: 8px;
+}
+
+/**
+ * Table styles
+ */
+#eventlistTable {
+  border: 1px solid green;
+  padding: 0px;
+  margin: 0px;
+}
+
+/**
+ * Text markup
+ */
+div#events h3, div#currencies h3, div#currencypairs h3 {
+  text-decoration:none;
+  border-bottom:1px dotted #000000;
+}
+div#events h3:hover, div#currencies h3:hover, div#currencypairs h3:hover {
+  cursor: pointer;
+}
+
+/**
+ * Control styles
+ */
+.fxcontrol-refresh {
+  float:left;
+  margin-right: 10px;
+}
+.fxcontrol-add {
+  float:left;
+  margin-right: 10px;
+}
+.fxcontrol-save, .fxcontrol-cancel {
+  float:left;
+  margin-right: 10px;
+  display: none;
+}

@@ -14,6 +14,7 @@ CREATE VIEW dbo.vFX_EventTransactions AS
 
 	SELECT etrx.eventid, etrx.name, etrx.eventdate, etrx.eventtime, etrx.previous
 		, etrx.forecast, etrx.actual, etrx.currency
+		, 0 as err_no, '' as err_desc
 	from fxevent_transactions etrx
 	left join fxevents evt
 		on etrx.eventid = evt.eventid

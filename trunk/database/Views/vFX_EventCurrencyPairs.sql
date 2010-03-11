@@ -13,6 +13,7 @@ GO
 CREATE VIEW dbo.vFX_EventCurrencyPairs AS
 
 	SELECT ecp.eventid, ecp.cp_id, evt.name, cp.base, cp.quote, cp.boughtsold_level, cp.inactive
+	, 0 as err_no, '' as err_desc
 	from fxevent_currencypairs ecp
 	left join fxevents evt
 		on ecp.eventid = evt.id

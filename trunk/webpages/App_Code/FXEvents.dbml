@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="tradejournal" Class="FXEventsDataContext" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=kavv08;Initial Catalog=tradejournal;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="tradejournalConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.vFX_Currencies" Member="currencies">
+    <Type Name="currency">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="currency" Member="currencyid" Type="System.String" DbType="NChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="lastmodified" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="err_no" Type="System.Int32" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" CanBeNull="false" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId1">
+      <Argument Parameter="currency" Member="currencyid" />
+      <Argument Parameter="name" Member="name" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId2">
+      <Argument Parameter="currency" Member="currencyid" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.vFX_CurrencyPairs" Member="currencypairs">
+    <Type Name="currencypair">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="base" Type="System.String" DbType="NChar(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="quote" Type="System.String" DbType="NChar(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="boughtsold_level" Type="System.Decimal" DbType="Decimal(1,1) NOT NULL" CanBeNull="false" />
+      <Column Name="inactive" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="lastmodified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="err_no" Type="System.Int32" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" CanBeNull="false" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId3">
+      <Argument Parameter="base" Member="base" />
+      <Argument Parameter="quote" Member="quote" />
+      <Argument Parameter="boughtsold_level" Member="boughtsold_level" />
+      <Argument Parameter="inactive" Member="inactive" />
+      <Argument Parameter="lastmodified" Member="lastmodified" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId4">
+      <Argument Parameter="base" Member="base" />
+      <Argument Parameter="quote" Member="quote" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.fxerrors" Member="fxerrors">
+    <Type Name="fxerror">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="err_no" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vFX_EventAliases" Member="fxevent_alias">
+    <Type Name="fxevent_alias">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="err_no" Type="System.Int32" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" CanBeNull="false" />
+      <Association Name="fxevent_fxevent_alias" Member="fxevent" ThisKey="eventid" OtherKey="eventid" Type="fxevent" IsForeignKey="true" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId5">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId6">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.vFX_EventIndicators" Member="fxevent_associations">
+    <Type Name="fxevent_association">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ind_id" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ind_order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ind_importance" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="ind_positive_threshhold" Type="System.Decimal" DbType="Decimal(19,5)" CanBeNull="true" />
+      <Column Name="ind_positive_threshhold_weight" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="ind_negative_threshhold" Type="System.Decimal" DbType="Decimal(19,5)" CanBeNull="true" />
+      <Column Name="ind_negative_threshhold_weight" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="err_no" Type="System.Int32" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" CanBeNull="false" />
+      <Association Name="fxevent_fxevent_association" Member="fxevent" ThisKey="eventid" OtherKey="eventid" Type="fxevent" IsForeignKey="true" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId7">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="ind_id" Member="ind_id" />
+      <Argument Parameter="ind_order" Member="ind_order" />
+      <Argument Parameter="ind_importance" Member="ind_importance" />
+      <Argument Parameter="ind_positive_threshhold" Member="ind_positive_threshhold" />
+      <Argument Parameter="ind_positive_threshhold_weight" Member="ind_positive_threshhold_weight" />
+      <Argument Parameter="ind_negative_threshhold" Member="ind_negative_threshhold" />
+      <Argument Parameter="ind_negative_threshhold_weight" Member="ind_negative_threshhold_weight" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId8">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="ind_id" Member="ind_id" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.vFX_EventCurrencyPairs" Member="fxevent_currencypairs">
+    <Type Name="fxevent_currencypair">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cp_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="base" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="quote" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="err_no" Type="System.Int32" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" CanBeNull="false" />
+      <Association Name="fxevent_fxevent_currencypair" Member="fxevent" ThisKey="eventid" OtherKey="eventid" Type="fxevent" IsForeignKey="true" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId9">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="base" Member="base" />
+      <Argument Parameter="quote" Member="quote" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId10">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="base" Member="base" />
+      <Argument Parameter="quote" Member="quote" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.vFX_EventTransactions" Member="fxevent_transactions">
+    <Type Name="fxevent_transaction">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="eventdate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="eventtime" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="importance" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="previous" Type="System.Decimal" DbType="Decimal(19,5)" CanBeNull="true" />
+      <Column Name="forecast" Type="System.Decimal" DbType="Decimal(19,5)" CanBeNull="true" />
+      <Column Name="actual" Type="System.Decimal" DbType="Decimal(19,5)" CanBeNull="true" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="err_no" Type="System.Int32" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" CanBeNull="false" />
+      <Association Name="fxevent_fxevent_transaction" Member="fxevent" ThisKey="eventid" OtherKey="eventid" Type="fxevent" IsForeignKey="true" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId11">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId12">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.vFX_Events" Member="fxevents">
+    <Type Name="fxevent">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="recurring" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="next_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="next_time" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="importance" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="previous" Type="System.Decimal" DbType="Decimal(19,5)" CanBeNull="true" />
+      <Column Name="watch" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="err_no" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="err_desc" Type="System.String" DbType="nvarchar(255)" CanBeNull="true" />
+      <Association Name="fxevent_fxevent_alias" Member="fxevent_alias" ThisKey="eventid" OtherKey="eventid" Type="fxevent_alias" />
+      <Association Name="fxevent_fxevent_association" Member="fxevent_associations" ThisKey="eventid" OtherKey="eventid" Type="fxevent_association" />
+      <Association Name="fxevent_fxevent_currencypair" Member="fxevent_currencypairs" ThisKey="eventid" OtherKey="eventid" Type="fxevent_currencypair" />
+      <Association Name="fxevent_fxevent_transaction" Member="fxevent_transactions" ThisKey="eventid" OtherKey="eventid" Type="fxevent_transaction" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId13">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="name" Member="name" />
+      <Argument Parameter="recurring" Member="recurring" />
+      <Argument Parameter="next_date" Member="next_date" />
+      <Argument Parameter="next_time" Member="next_time" />
+      <Argument Parameter="importance" Member="importance" />
+      <Argument Parameter="previous" Member="previous" />
+      <Argument Parameter="watch" Member="watch" />
+      <Argument Parameter="currency" Member="currency" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId14">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Function Id="FunctionId1" Name="dbo.spFX_AddCurrency" Method="AddCurrency">
+    <Parameter Name="currency" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId4" Name="dbo.spFX_DelCurrencyPair" Method="DelCurrencyPair">
+    <Parameter Name="base" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="quote" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId3" Name="dbo.spFX_AddCurrencyPair" Method="AddCurrencyPair">
+    <Parameter Name="base" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="quote" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="boughtsold_level" Type="System.Decimal" DbType="Decimal" />
+    <Parameter Name="inactive" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="lastmodified" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId13" Name="dbo.spFX_AddEvent" Method="AddEvent">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="recurring" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="next_date" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="next_time" Type="System.TimeSpan" DbType="Time" />
+    <Parameter Name="importance" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="previous" Type="System.Decimal" DbType="Decimal" />
+    <Parameter Name="watch" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="currency" Type="System.String" DbType="NChar(3)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId5" Name="dbo.spFX_AddEventAlias" Method="AddEventAlias">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="aliasname" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId7" Name="dbo.spFX_AddEventAssociation" Method="AddEventAssociation">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="ind_id" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="ind_order" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ind_importance" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="ind_positive_threshhold" Type="System.Decimal" DbType="Decimal" />
+    <Parameter Name="ind_positive_threshhold_weight" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="ind_negative_threshhold" Type="System.Decimal" DbType="Decimal" />
+    <Parameter Name="ind_negative_threshhold_weight" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId9" Name="dbo.spFX_AddEventCurrencyPair" Method="AddEventCurrencyPair">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="base" Type="System.String" DbType="NChar(3)" />
+    <Parameter Name="quote" Type="System.String" DbType="NChar(3)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId11" Name="dbo.spFX_AddEventTransaction" Method="AddEventTransaction">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="ignore_watch" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId12" Name="dbo.spFX_CloseEventTransaction" Method="CloseEventTransaction">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="ignore_date" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="status" Type="System.Int32" DbType="Int" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId2" Name="dbo.spFX_DelCurrency" Method="DelCurrency">
+    <Parameter Name="currency" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spFX_GetEventTransactions" Method="GetEventTransactions">
+    <Parameter Name="eventid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spFX_GetEventTransactionsResult">
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="eventdate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="eventtime" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="previous" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="forecast" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="actual" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Id="FunctionId14" Name="dbo.spFX_DelEvent" Method="DelEvent">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId6" Name="dbo.spFX_DelEventAlias" Method="DelEventAlias">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="aliasname" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId8" Name="dbo.spFX_DelEventAssociation" Method="DelEventAssociation">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="ind_id" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId10" Name="dbo.spFX_DelEventCurrencyPair" Method="DelEventCurrencyPair">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="base" Type="System.String" DbType="NChar(3)" />
+    <Parameter Name="quote" Type="System.String" DbType="NChar(3)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spFX_GetCurrency" Method="GetCurrency">
+    <Parameter Name="currency" Type="System.String" DbType="NVarChar(3)" />
+    <ElementType Name="spFX_GetCurrencyResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NChar(50)" CanBeNull="true" />
+      <Column Name="lastmodified" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spFX_GetCurrencyPair" Method="GetCurrencyPair">
+    <Parameter Name="base" Type="System.String" DbType="NVarChar(3)" />
+    <Parameter Name="quote" Type="System.String" DbType="NVarChar(3)" />
+    <ElementType Name="spFX_GetCurrencyPairResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="base" Type="System.String" DbType="NChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="quote" Type="System.String" DbType="NChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="boughtsold_level" Type="System.Decimal" DbType="Decimal(0,0) NOT NULL" CanBeNull="false" />
+      <Column Name="inactive" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spFX_GetEvent" Method="GetEvent">
+    <Parameter Name="eventid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spFX_GetEventResult">
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="recurring" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="next_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="next_time" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="importance" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="previous" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="watch" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spFX_GetEventAliases" Method="GetEventAliases">
+    <Parameter Name="eventid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spFX_GetEventAliasesResult">
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="event_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="alias_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spFX_GetEventCurrencyPairs" Method="GetEventCurrencyPairs">
+    <Parameter Name="eventid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spFX_GetEventCurrencyPairsResult">
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="base" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="quote" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="boughtsold_level" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="inactive" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spFX_GetEventIndicators" Method="GetEventIndicators">
+    <Parameter Name="eventid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spFX_GetEventIndicatorsResult">
+      <Column Name="ind_id" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ind_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="importance" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="next_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="next_time" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="previous" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="recurring" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Column Name="ind_order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ind_importance" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="ind_positive_threshhold" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="ind_positive_threshhold_weight" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="ind_negative_threshhold" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="ind_negative_threshhold_weight" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="event_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spFX_GetEventTransactionLast" Method="GetEventTransactionLast">
+    <Parameter Name="eventid" Type="System.Int32" DbType="Int" />
+    <ElementType Name="spFX_GetEventTransactionLastResult">
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="eventdate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="eventtime" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="previous" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="forecast" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="actual" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

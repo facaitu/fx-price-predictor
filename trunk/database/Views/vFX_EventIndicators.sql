@@ -16,6 +16,7 @@ CREATE VIEW dbo.vFX_EventIndicators AS
 	, es.next_time, es.previous, es.recurring, ea.ind_order, ea.ind_importance
 	, ea.ind_positive_threshhold, ea.ind_positive_threshhold_weight, ea.ind_negative_threshhold
 	, ea.ind_negative_threshhold_weight, ea.eventid, ep.name as event_name
+	, 0 as err_no, '' as err_desc
 	from fxevent_associations ea
 	left join fxevents es
 		on ea.ind_id = es.id
