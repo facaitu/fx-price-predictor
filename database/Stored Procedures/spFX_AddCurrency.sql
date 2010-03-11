@@ -37,6 +37,7 @@ AS
 		begin
 			select @err_no = @@ERROR
 		end
+		else select @err_desc = 'Successfully added currency.'
 	end
 	
 if @err_no > 0 

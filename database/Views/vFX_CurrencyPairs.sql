@@ -12,7 +12,8 @@ GO
 
 CREATE VIEW dbo.vFX_CurrencyPairs AS
 
-	SELECT id, base, quote, boughtsold_level, inactive
+	SELECT id, base, quote, boughtsold_level, inactive, lastmodified
+	, 0 as err_no, '' as err_desc
 	from currencypairs
 GO
 

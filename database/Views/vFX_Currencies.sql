@@ -13,6 +13,7 @@ GO
 CREATE VIEW dbo.vFX_Currencies AS
 
 	SELECT id, currency, name, lastmodified
+	, 0 as err_no, '' as err_desc
 	from currencies
 GO
 

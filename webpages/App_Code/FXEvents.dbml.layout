@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="FXEvents">
+  <DataContextMoniker Name="/FXEventsDataContext" />
+  <nestedChildShapes>
+    <classShape Id="8afdd92a-425f-428d-8315-212b43ca1ddf" absoluteBounds="5.125, 4, 2, 1.9631982421874996">
+      <DataClassMoniker Name="/FXEventsDataContext/currency" />
+      <nestedChildShapes>
+        <elementListCompartment Id="571386b3-edeb-4f04-b55d-384fd54cab98" absoluteBounds="5.14, 4.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dc550a3d-8a43-4f48-ba16-aac9ca8d9cf5" absoluteBounds="2.625, 3.625, 2, 2.3478011067708326">
+      <DataClassMoniker Name="/FXEventsDataContext/currencypair" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b7c4a35c-2f3f-47bf-bd1f-cf9af3c836d1" absoluteBounds="2.6399999999999997, 4.085, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f3a8b8b5-a8f6-4451-bfe2-d4a861a665a5" absoluteBounds="6.875, 2.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/FXEventsDataContext/fxerror" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b06e03d0-b455-4140-a3df-4b6fbce81444" absoluteBounds="6.89, 2.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="80f609f8-126b-4fd3-a0d6-b8e0c3614cbb" absoluteBounds="6.875, 0.5, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/FXEventsDataContext/fxevent_alias" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aa01723e-ebef-48c2-8dc5-8c77f259a8ec" absoluteBounds="6.89, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="babd7f3c-c6ad-46d2-9fa5-59d260f58a3c" absoluteBounds="2.625, 0.5, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/FXEventsDataContext/fxevent_association" />
+      <nestedChildShapes>
+        <elementListCompartment Id="86ec3a3c-2837-491d-bef5-807a8b8f5a12" absoluteBounds="2.64, 0.96, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ea990637-db0d-46ec-959d-48e5edf8dde3" absoluteBounds="0.5, 3.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/FXEventsDataContext/fxevent_currencypair" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0c4c5947-b67c-4b6b-af1f-82eb245c74f0" absoluteBounds="0.51499999999999968, 4.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="aacca43d-c141-4f00-a801-77b468e3915e" absoluteBounds="4.75, 0.5, 2, 3.1170068359375">
+      <DataClassMoniker Name="/FXEventsDataContext/fxevent_transaction" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4ba6d678-b92b-43e4-ae67-fde231693bc5" absoluteBounds="4.7650000000000006, 0.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="11b0740d-dc12-47bb-8fc3-88b982a42631" absoluteBounds="0.5, 0.5, 2, 3.1170068359375">
+      <DataClassMoniker Name="/FXEventsDataContext/fxevent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="81b5a4ea-c7af-49d9-9216-e9489a7c780e" absoluteBounds="0.515, 0.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 0.501537461538462); (2.87653746153846 : 0.125); (6.5013612283153 : 0.125); (6.8763612283153 : 0.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/FXEventsDataContext/fxevent/fxevent_fxevent_alias" />
+      <nodes>
+        <classShapeMoniker Id="11b0740d-dc12-47bb-8fc3-88b982a42631" />
+        <classShapeMoniker Id="80f609f8-126b-4fd3-a0d6-b8e0c3614cbb" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 1.99437393259215); (2.625 : 1.99437393259215)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/FXEventsDataContext/fxevent/fxevent_fxevent_association" />
+      <nodes>
+        <classShapeMoniker Id="11b0740d-dc12-47bb-8fc3-88b982a42631" />
+        <classShapeMoniker Id="babd7f3c-c6ad-46d2-9fa5-59d260f58a3c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.5 : 3.6170068359375); (1.5 : 3.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/FXEventsDataContext/fxevent/fxevent_fxevent_currencypair" />
+      <nodes>
+        <classShapeMoniker Id="11b0740d-dc12-47bb-8fc3-88b982a42631" />
+        <classShapeMoniker Id="ea990637-db0d-46ec-959d-48e5edf8dde3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 3.55210611979167); (4.75 : 3.55210611979167)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/FXEventsDataContext/fxevent/fxevent_fxevent_transaction" />
+      <nodes>
+        <classShapeMoniker Id="11b0740d-dc12-47bb-8fc3-88b982a42631" />
+        <classShapeMoniker Id="aacca43d-c141-4f00-a801-77b468e3915e" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
