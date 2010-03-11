@@ -6,23 +6,23 @@
 /**
  * Structure styles
  */
-#eventlist {
+#eventlist, #events_controls {
   width: 1050px;
-  border: 1px solid red;
 }
-#currencylist {
+#currencylist, #currencies_controls {
   width: 400px;
-  border: 1px solid red;
 }
-#currencypairlist {
-  width: 300px;
-  border: 1px solid red;
+#currencypairlist, #currencypairs_controls {
+  width: 400px;
 }
 .fxcontrols-box {
-  border: 1px solid blue;
-  height: 35px;
+  height: 50px;
   padding-bottom: 5px;
-  padding-left: 8px;
+  padding-right: 8px;
+  text-align: right;
+}
+.fxcontrols-box p {
+  float: right;
 }
 
 /**
@@ -60,4 +60,14 @@ div#events h3:hover, div#currencies h3:hover, div#currencypairs h3:hover {
   float:left;
   margin-right: 10px;
   display: none;
+}
+.fg-button { 
+   outline: 0; 
+   margin:0 4px 0 0; 
+   padding: .4em 1em; 
+   text-decoration:none !important; 
+   cursor:pointer; 
+   position: relative; 
+   text-align: center; 
+   zoom: 1; 
 }

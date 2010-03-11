@@ -12,7 +12,9 @@ body {
 /**
  * Structure markup
  */
-
+#container {
+  padding-left:15px;
+}
 /**
  * Table styles
  */
