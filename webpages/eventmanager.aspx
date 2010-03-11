@@ -26,20 +26,20 @@
       <div id="events">
         <h3>Events</h3>
         <div id="events_controls" class="fxcontrols-box">
-          <p><a id="getEvents" class="fxcontrol-refresh" href="#">Refresh</a></p>
-          <p><a id="addEventsTableRow" class="fxcontrol-add" href="#">Add Event</a></p>
-          <p><a id="saveEventNew" class="fxcontrol-save" href="#">Save Event</a></p>
-          <p><a id="cancelEventNew" class="fxcontrol-cancel" href="#">Cancel</a></p>
+          <p><a id="getEvents" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
+          <p><a id="addEventsTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Event</a></p>
+          <p><a id="saveEventNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Event</a></p>
+          <p><a id="cancelEventNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
         </div>
         <div id="eventlist">
         </div>
       <div id="currencies">
         <h3>Currencies</h3>
         <div id="currencies_controls" class="fxcontrols-box">
-          <p><a id="getCurrencies" class="fxcontrol-refresh" href="#">Refresh</a></p>
-          <p><a id="addCurrenciesTableRow" class="fxcontrol-add" href="#">Add Currency</a></p>
-          <p><a id="saveCurrencyNew" class="fxcontrol-save" href="#">Save Currency</a></p>
-          <p><a id="cancelCurrencyNew" class="fxcontrol-cancel" href="#">Cancel</a></p>
+          <p><a id="getCurrencies" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
+          <p><a id="addCurrenciesTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Currency</a></p>
+          <p><a id="saveCurrencyNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Currency</a></p>
+          <p><a id="cancelCurrencyNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
         </div>
         <div id="currencylist">
         </div>
@@ -49,10 +49,10 @@
       <div id="currencypairs">
         <h3>Currency Pairs</h3>
         <div id="currencypairs_controls" class="fxcontrols-box">
-          <p><a id="getCurrencyPairs" class="fxcontrol-refresh" href="#">Refresh</a></p>
-          <p><a id="addCurrencyPairsTableRow" class="fxcontrol-add" href="#">Add Currency Pair</a></p>
-          <p><a id="saveCurrencyPairNew" class="fxcontrol-save" href="#">Save Currency Pair</a></p>
-          <p><a id="cancelCurrencyPairNew" class="fxcontrol-cancel" href="#">Cancel</a></p>
+          <p><a id="getCurrencyPairs" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
+          <p><a id="addCurrencyPairsTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Currency Pair</a></p>
+          <p><a id="saveCurrencyPairNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Currency Pair</a></p>
+          <p><a id="cancelCurrencyPairNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
         </div>
         <div id="currencypairlist">
         </div>
