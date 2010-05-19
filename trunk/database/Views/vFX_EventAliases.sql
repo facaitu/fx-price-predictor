@@ -12,11 +12,11 @@ GO
 
 CREATE VIEW dbo.vFX_EventAliases AS
 
-	SELECT ep.eventid, ep.name as event_name, ea.name as alias_name
+	SELECT ea.id, ep.eventid, ep.name as event_name, ea.name as alias_name
 	, 0 as err_no, '' as err_desc
 	from fxevent_aliases ea
 	left join fxevents ep
-		on ea.eventid = ep.id
+		on ea.eventid = ep.eventid
 
 GO
 
