@@ -23,46 +23,57 @@
         <h1>FX-Price-Predictor</h1>
         <h2>Event Manager</h2>
       </div>
-      <div id="events">
+      <div id="fxevents" class="dataframe">
         <h3>Events</h3>
-        <div id="events_controls" class="fxcontrols-box">
-          <p><a id="getEvents" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
-          <p><a id="addEventsTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Event</a></p>
-          <p><a id="saveEventNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Event</a></p>
-          <p><a id="cancelEventNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
+        <div id="fxevents_controls" class="fxcontrols-box">
+          <p><a id="getFXEvents" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
+          <p><a id="delFXEvents" class="fxcontrol-del fg-button ui-state-default ui-corner-all" href="#">Delete Event(s)</a></p>
+          <p><a id="addFXEventsTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Event</a></p>
+          <p><a id="saveFXEventNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Event</a></p>
+          <p><a id="cancelFXEventNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
         </div>
-        <div id="eventlist">
+        <div id="fxeventlist">
         </div>
-      <div id="currencies">
+      </div>
+      <div id="fxeventaliases" class="dataframe">
+        <h3>Event Aliases</h3>
+        <div id="fxeventaliases_controls" class="fxcontrols-box">
+          <p><a id="getFXEventAliases" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
+          <p><a id="delFXEventAliases" class="fxcontrol-del fg-button ui-state-default ui-corner-all" href="#">Delete Alias(s)</a></p>
+          <p><a id="addFXEventAliasesTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Alias</a></p>
+          <p><a id="saveFXEventAliasNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Alias</a></p>
+          <p><a id="cancelFXEventAliasNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
+        </div>
+        <div id="fxeventaliaslist">
+        </div>
+       </div>
+      <div id="currencypairs" class="dataframe">
+        <h3>Currency Pairs</h3>
+        <div id="currencypairs_controls" class="fxcontrols-box">
+          <p><a id="getCurrencyPairs" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
+          <p><a id="delCurrencyPairs" class="fxcontrol-del fg-button ui-state-default ui-corner-all" href="#">Delete Pair(s)</a></p>
+          <p><a id="addCurrencyPairsTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Currency Pair</a></p>
+          <p><a id="saveCurrencyPairNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Pair</a></p>
+          <p><a id="cancelCurrencyPairNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
+        </div>
+        <div id="currencypairlist">
+        </div>
+      </div>
+      <div id="currencies" class="dataframe">
         <h3>Currencies</h3>
         <div id="currencies_controls" class="fxcontrols-box">
           <p><a id="getCurrencies" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
+          <p><a id="delCurrencies" class="fxcontrol-del fg-button ui-state-default ui-corner-all" href="#">Delete Currency(s)</a></p>
           <p><a id="addCurrenciesTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Currency</a></p>
           <p><a id="saveCurrencyNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Currency</a></p>
           <p><a id="cancelCurrencyNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
         </div>
         <div id="currencylist">
         </div>
-        <div id="addCurrency">
-        </div>
       </div>
-      <div id="currencypairs">
-        <h3>Currency Pairs</h3>
-        <div id="currencypairs_controls" class="fxcontrols-box">
-          <p><a id="getCurrencyPairs" class="fxcontrol-refresh fg-button ui-state-default ui-corner-all" href="#">Refresh</a></p>
-          <p><a id="addCurrencyPairsTableRow" class="fxcontrol-add fg-button ui-state-default ui-corner-all" href="#">Add Currency Pair</a></p>
-          <p><a id="saveCurrencyPairNew" class="fxcontrol-save fg-button ui-state-default ui-corner-all" href="#">Save Currency Pair</a></p>
-          <p><a id="cancelCurrencyPairNew" class="fxcontrol-cancel fg-button ui-state-default ui-corner-all" href="#">Cancel</a></p>
-        </div>
-        <div id="currencypairlist">
-        </div>
-        <div id="addCurrencyPair">
-        </div>
+      <div id="footer">
+        <h3>Werd.</h3>
       </div>
-    </div>
-    <div id="footer">
-      <h3>Werd.</h3>
-    </div>
     </div>
   </form>
 </body>

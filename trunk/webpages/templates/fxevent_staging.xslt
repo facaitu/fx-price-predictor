@@ -16,10 +16,11 @@
         <th>Importance</th>
         <th>Watch</th>
         <th>Delete</th>
+        <th>Alias Of</th>
       </tr>
       </thead>
       <tbody>
-      <xsl:for-each select="ArrayOffxevent/fxevent">
+      <xsl:for-each select="ArrayOffxevent/fxevent_staging">
         <tr class="gradeA">
         <td>
           <xsl:value-of select="currency"/>
@@ -60,6 +61,7 @@
             </xsl:if>
           </xsl:element>
           </td>
+          <td></td>
         </tr>
       </xsl:for-each>
       </tbody>
