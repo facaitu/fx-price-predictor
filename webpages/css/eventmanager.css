@@ -6,15 +6,13 @@
 /**
  * Structure styles
  */
-#eventlist, #events_controls {
+#fxevents, #fxeventaliases {
   width: 1050px;
 }
-#currencylist, #currencies_controls {
-  width: 400px;
+#currencies, #currencypairs {
+  width: 450px;
 }
-#currencypairlist, #currencypairs_controls {
-  width: 400px;
-}
+
 .fxcontrols-box {
   height: 50px;
   padding-bottom: 5px;
@@ -28,7 +26,7 @@
 /**
  * Table styles
  */
-#eventlistTable {
+.display {
   border: 1px solid green;
   padding: 0px;
   margin: 0px;
@@ -37,11 +35,11 @@
 /**
  * Text markup
  */
-div#events h3, div#currencies h3, div#currencypairs h3 {
+.dataframe h3 {
   text-decoration:none;
   border-bottom:1px dotted #000000;
 }
-div#events h3:hover, div#currencies h3:hover, div#currencypairs h3:hover {
+.dataframe h3:hover {
   cursor: pointer;
 }
 
@@ -52,7 +50,7 @@ div#events h3:hover, div#currencies h3:hover, div#currencypairs h3:hover {
   float:left;
   margin-right: 10px;
 }
-.fxcontrol-add {
+.fxcontrol-add, .fxcontrol-del {
   float:left;
   margin-right: 10px;
 }

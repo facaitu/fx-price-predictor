@@ -2,10 +2,10 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="FXEvents">
   <DataContextMoniker Name="/FXEventsDataContext" />
   <nestedChildShapes>
-    <classShape Id="8afdd92a-425f-428d-8315-212b43ca1ddf" absoluteBounds="5.125, 4, 2, 1.9631982421874996">
+    <classShape Id="8afdd92a-425f-428d-8315-212b43ca1ddf" absoluteBounds="4.75, 3.75, 2, 1.9631982421874996">
       <DataClassMoniker Name="/FXEventsDataContext/currency" />
       <nestedChildShapes>
-        <elementListCompartment Id="571386b3-edeb-4f04-b55d-384fd54cab98" absoluteBounds="5.14, 4.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="571386b3-edeb-4f04-b55d-384fd54cab98" absoluteBounds="4.765, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="dc550a3d-8a43-4f48-ba16-aac9ca8d9cf5" absoluteBounds="2.625, 3.625, 2, 2.3478011067708326">
@@ -20,10 +20,10 @@
         <elementListCompartment Id="b06e03d0-b455-4140-a3df-4b6fbce81444" absoluteBounds="6.89, 2.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="80f609f8-126b-4fd3-a0d6-b8e0c3614cbb" absoluteBounds="6.875, 0.5, 2, 1.7708968098958331">
+    <classShape Id="80f609f8-126b-4fd3-a0d6-b8e0c3614cbb" absoluteBounds="6.875, 0.5, 2, 1.9631982421875">
       <DataClassMoniker Name="/FXEventsDataContext/fxevent_alias" />
       <nestedChildShapes>
-        <elementListCompartment Id="aa01723e-ebef-48c2-8dc5-8c77f259a8ec" absoluteBounds="6.89, 0.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="aa01723e-ebef-48c2-8dc5-8c77f259a8ec" absoluteBounds="6.89, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="babd7f3c-c6ad-46d2-9fa5-59d260f58a3c" absoluteBounds="2.625, 0.5, 2, 2.9247054036458331">
@@ -50,7 +50,7 @@
         <elementListCompartment Id="81b5a4ea-c7af-49d9-9216-e9489a7c780e" absoluteBounds="0.515, 0.96, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 0.501537461538462); (2.87653746153846 : 0.125); (6.5013612283153 : 0.125); (6.8763612283153 : 0.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.5 : 0.501537461538462); (2.87653746153846 : 0.125); (6.5 : 0.125); (6.875 : 0.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FXEventsDataContext/fxevent/fxevent_fxevent_alias" />
       <nodes>
         <classShapeMoniker Id="11b0740d-dc12-47bb-8fc3-88b982a42631" />
@@ -71,12 +71,18 @@
         <classShapeMoniker Id="ea990637-db0d-46ec-959d-48e5edf8dde3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.5 : 3.55210611979167); (4.75 : 3.55210611979167)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.5 : 3.55210611979167); (4.75 : 3.55210611979167)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/FXEventsDataContext/fxevent/fxevent_fxevent_transaction" />
       <nodes>
         <classShapeMoniker Id="11b0740d-dc12-47bb-8fc3-88b982a42631" />
         <classShapeMoniker Id="aacca43d-c141-4f00-a801-77b468e3915e" />
       </nodes>
     </associationConnector>
+    <classShape Id="eb8a0d84-8c14-45a3-816e-11d12c11c78b" absoluteBounds="6.875, 4, 2, 3.1170068359375">
+      <DataClassMoniker Name="/FXEventsDataContext/fxevent_staging" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1183a0b6-f74e-490d-859f-d31ecc2bd98d" absoluteBounds="6.8900000000000006, 4.46, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

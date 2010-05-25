@@ -40,6 +40,7 @@ public partial class FXEventsDataContext : System.Data.Linq.DataContext
   partial void Updatefxevent_currencypair(fxevent_currencypair instance);
   partial void Updatefxevent_transaction(fxevent_transaction instance);
   partial void Updatefxevent(fxevent instance);
+  partial void Updatefxevent_staging(fxevent_staging instance);
   #endregion
 	
 	public FXEventsDataContext() : 
@@ -133,6 +134,14 @@ public partial class FXEventsDataContext : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<fxevent>();
+		}
+	}
+	
+	public System.Data.Linq.Table<fxevent_staging> fxevent_stagings
+	{
+		get
+		{
+			return this.GetTable<fxevent_staging>();
 		}
 	}
 	
@@ -258,6 +267,24 @@ public partial class FXEventsDataContext : System.Data.Linq.DataContext
 		System.Nullable<int> p1 = obj.err_no;
 		string p2 = obj.err_desc;
 		this.DelEvent(obj.eventid, ref p1, ref p2);
+		obj.err_no = p1.GetValueOrDefault();
+		obj.err_desc = p2;
+	}
+	
+	private void Insertfxevent_staging(fxevent_staging obj)
+	{
+		System.Nullable<int> p1 = obj.err_no;
+		string p2 = obj.err_desc;
+		this.AddEventStaging(obj.eventid, obj.name, ((System.Nullable<byte>)(obj.recurring)), ((System.Nullable<System.DateTime>)(obj.next_date)), ((System.Nullable<System.TimeSpan>)(obj.next_time)), ((System.Nullable<short>)(obj.importance)), ((System.Nullable<decimal>)(obj.previous)), ((System.Nullable<byte>)(obj.watch)), obj.currency, ref p1, ref p2);
+		obj.err_no = p1.GetValueOrDefault();
+		obj.err_desc = p2;
+	}
+	
+	private void Deletefxevent_staging(fxevent_staging obj)
+	{
+		System.Nullable<int> p1 = obj.err_no;
+		string p2 = obj.err_desc;
+		this.DelEventStaging(obj.eventid, ref p1, ref p2);
 		obj.err_no = p1.GetValueOrDefault();
 		obj.err_desc = p2;
 	}
@@ -442,6 +469,24 @@ public partial class FXEventsDataContext : System.Data.Linq.DataContext
 	{
 		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), eventid);
 		return ((ISingleResult<spFX_GetEventTransactionLastResult>)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.spFX_DelEventStaging")]
+	public int DelEventStaging([Parameter(DbType="NVarChar(10)")] string eventid, [Parameter(DbType="Int")] ref System.Nullable<int> err_no, [Parameter(DbType="NVarChar(255)")] ref string err_desc)
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), eventid, err_no, err_desc);
+		err_no = ((System.Nullable<int>)(result.GetParameterValue(1)));
+		err_desc = ((string)(result.GetParameterValue(2)));
+		return ((int)(result.ReturnValue));
+	}
+	
+	[Function(Name="dbo.spFX_AddEventStaging")]
+	public int AddEventStaging([Parameter(DbType="NVarChar(10)")] string eventid, [Parameter(DbType="NVarChar(50)")] string name, [Parameter(DbType="TinyInt")] System.Nullable<byte> recurring, [Parameter(DbType="Date")] System.Nullable<System.DateTime> next_date, [Parameter(DbType="Time")] System.Nullable<System.TimeSpan> next_time, [Parameter(DbType="SmallInt")] System.Nullable<short> importance, [Parameter(DbType="Decimal")] System.Nullable<decimal> previous, [Parameter(DbType="TinyInt")] System.Nullable<byte> watch, [Parameter(DbType="NChar(3)")] string currency, [Parameter(DbType="Int")] ref System.Nullable<int> err_no, [Parameter(DbType="NVarChar(255)")] ref string err_desc)
+	{
+		IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), eventid, name, recurring, next_date, next_time, importance, previous, watch, currency, err_no, err_desc);
+		err_no = ((System.Nullable<int>)(result.GetParameterValue(9)));
+		err_desc = ((string)(result.GetParameterValue(10)));
+		return ((int)(result.ReturnValue));
 	}
 }
 
@@ -1040,6 +1085,8 @@ public partial class fxevent_alias : INotifyPropertyChanging, INotifyPropertyCha
 	
 	private string _err_desc;
 	
+	private string _alias_name;
+	
 	private EntityRef<fxevent> _fxevent;
 	
     #region Extensibility Method Definitions
@@ -1050,12 +1097,14 @@ public partial class fxevent_alias : INotifyPropertyChanging, INotifyPropertyCha
     partial void OnidChanged();
     partial void OneventidChanging(string value);
     partial void OneventidChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
+    partial void Onevent_nameChanging(string value);
+    partial void Onevent_nameChanged();
     partial void Onerr_noChanging(int value);
     partial void Onerr_noChanged();
     partial void Onerr_descChanging(string value);
     partial void Onerr_descChanged();
+    partial void Onalias_nameChanging(string value);
+    partial void Onalias_nameChanged();
     #endregion
 	
 	public fxevent_alias()
@@ -1111,7 +1160,7 @@ public partial class fxevent_alias : INotifyPropertyChanging, INotifyPropertyCha
 	
 	[Column(Storage="_name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
 	[DataMember(Order=3)]
-	public string name
+	public string event_name
 	{
 		get
 		{
@@ -1121,11 +1170,11 @@ public partial class fxevent_alias : INotifyPropertyChanging, INotifyPropertyCha
 		{
 			if ((this._name != value))
 			{
-				this.OnnameChanging(value);
+				this.Onevent_nameChanging(value);
 				this.SendPropertyChanging();
 				this._name = value;
-				this.SendPropertyChanged("name");
-				this.OnnameChanged();
+				this.SendPropertyChanged("event_name");
+				this.Onevent_nameChanged();
 			}
 		}
 	}
@@ -1168,6 +1217,27 @@ public partial class fxevent_alias : INotifyPropertyChanging, INotifyPropertyCha
 				this._err_desc = value;
 				this.SendPropertyChanged("err_desc");
 				this.Onerr_descChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_alias_name", CanBeNull=false)]
+	[DataMember(Order=6)]
+	public string alias_name
+	{
+		get
+		{
+			return this._alias_name;
+		}
+		set
+		{
+			if ((this._alias_name != value))
+			{
+				this.Onalias_nameChanging(value);
+				this.SendPropertyChanging();
+				this._alias_name = value;
+				this.SendPropertyChanged("alias_name");
+				this.Onalias_nameChanged();
 			}
 		}
 	}
@@ -2766,6 +2836,357 @@ public partial class fxevent : INotifyPropertyChanging, INotifyPropertyChanged
 	public void OnSerialized(StreamingContext context)
 	{
 		this.serializing = false;
+	}
+}
+
+[Table(Name="dbo.vFX_EventsStaging")]
+[DataContract()]
+public partial class fxevent_staging : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _id;
+	
+	private string _eventid;
+	
+	private string _name;
+	
+	private byte _recurring;
+	
+	private System.DateTime _next_date;
+	
+	private System.TimeSpan _next_time;
+	
+	private short _importance;
+	
+	private System.Nullable<decimal> _previous;
+	
+	private byte _watch;
+	
+	private string _currency;
+	
+	private int _err_no;
+	
+	private string _err_desc;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OneventidChanging(string value);
+    partial void OneventidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnrecurringChanging(byte value);
+    partial void OnrecurringChanged();
+    partial void Onnext_dateChanging(System.DateTime value);
+    partial void Onnext_dateChanged();
+    partial void Onnext_timeChanging(System.TimeSpan value);
+    partial void Onnext_timeChanged();
+    partial void OnimportanceChanging(short value);
+    partial void OnimportanceChanged();
+    partial void OnpreviousChanging(System.Nullable<decimal> value);
+    partial void OnpreviousChanged();
+    partial void OnwatchChanging(byte value);
+    partial void OnwatchChanged();
+    partial void OncurrencyChanging(string value);
+    partial void OncurrencyChanged();
+    partial void Onerr_noChanging(int value);
+    partial void Onerr_noChanged();
+    partial void Onerr_descChanging(string value);
+    partial void Onerr_descChanged();
+    #endregion
+	
+	public fxevent_staging()
+	{
+		this.Initialize();
+	}
+	
+	[Column(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	[DataMember(Order=1)]
+	public int id
+	{
+		get
+		{
+			return this._id;
+		}
+		set
+		{
+			if ((this._id != value))
+			{
+				this.OnidChanging(value);
+				this.SendPropertyChanging();
+				this._id = value;
+				this.SendPropertyChanged("id");
+				this.OnidChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_eventid", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+	[DataMember(Order=2)]
+	public string eventid
+	{
+		get
+		{
+			return this._eventid;
+		}
+		set
+		{
+			if ((this._eventid != value))
+			{
+				this.OneventidChanging(value);
+				this.SendPropertyChanging();
+				this._eventid = value;
+				this.SendPropertyChanged("eventid");
+				this.OneventidChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+	[DataMember(Order=3)]
+	public string name
+	{
+		get
+		{
+			return this._name;
+		}
+		set
+		{
+			if ((this._name != value))
+			{
+				this.OnnameChanging(value);
+				this.SendPropertyChanging();
+				this._name = value;
+				this.SendPropertyChanged("name");
+				this.OnnameChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_recurring", DbType="TinyInt NOT NULL")]
+	[DataMember(Order=4)]
+	public byte recurring
+	{
+		get
+		{
+			return this._recurring;
+		}
+		set
+		{
+			if ((this._recurring != value))
+			{
+				this.OnrecurringChanging(value);
+				this.SendPropertyChanging();
+				this._recurring = value;
+				this.SendPropertyChanged("recurring");
+				this.OnrecurringChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_next_date", DbType="Date NOT NULL")]
+	[DataMember(Order=5)]
+	public System.DateTime next_date
+	{
+		get
+		{
+			return this._next_date;
+		}
+		set
+		{
+			if ((this._next_date != value))
+			{
+				this.Onnext_dateChanging(value);
+				this.SendPropertyChanging();
+				this._next_date = value;
+				this.SendPropertyChanged("next_date");
+				this.Onnext_dateChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_next_time", DbType="Time NOT NULL")]
+	[DataMember(Order=6)]
+	public System.TimeSpan next_time
+	{
+		get
+		{
+			return this._next_time;
+		}
+		set
+		{
+			if ((this._next_time != value))
+			{
+				this.Onnext_timeChanging(value);
+				this.SendPropertyChanging();
+				this._next_time = value;
+				this.SendPropertyChanged("next_time");
+				this.Onnext_timeChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_importance", DbType="SmallInt NOT NULL")]
+	[DataMember(Order=7)]
+	public short importance
+	{
+		get
+		{
+			return this._importance;
+		}
+		set
+		{
+			if ((this._importance != value))
+			{
+				this.OnimportanceChanging(value);
+				this.SendPropertyChanging();
+				this._importance = value;
+				this.SendPropertyChanged("importance");
+				this.OnimportanceChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_previous", DbType="Decimal(19,5)")]
+	[DataMember(Order=8)]
+	public System.Nullable<decimal> previous
+	{
+		get
+		{
+			return this._previous;
+		}
+		set
+		{
+			if ((this._previous != value))
+			{
+				this.OnpreviousChanging(value);
+				this.SendPropertyChanging();
+				this._previous = value;
+				this.SendPropertyChanged("previous");
+				this.OnpreviousChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_watch", DbType="TinyInt NOT NULL")]
+	[DataMember(Order=9)]
+	public byte watch
+	{
+		get
+		{
+			return this._watch;
+		}
+		set
+		{
+			if ((this._watch != value))
+			{
+				this.OnwatchChanging(value);
+				this.SendPropertyChanging();
+				this._watch = value;
+				this.SendPropertyChanged("watch");
+				this.OnwatchChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_currency", DbType="NChar(3)")]
+	[DataMember(Order=10)]
+	public string currency
+	{
+		get
+		{
+			return this._currency;
+		}
+		set
+		{
+			if ((this._currency != value))
+			{
+				this.OncurrencyChanging(value);
+				this.SendPropertyChanging();
+				this._currency = value;
+				this.SendPropertyChanged("currency");
+				this.OncurrencyChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_err_no", DbType="Int NOT NULL")]
+	[DataMember(Order=11)]
+	public int err_no
+	{
+		get
+		{
+			return this._err_no;
+		}
+		set
+		{
+			if ((this._err_no != value))
+			{
+				this.Onerr_noChanging(value);
+				this.SendPropertyChanging();
+				this._err_no = value;
+				this.SendPropertyChanged("err_no");
+				this.Onerr_noChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_err_desc", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+	[DataMember(Order=12)]
+	public string err_desc
+	{
+		get
+		{
+			return this._err_desc;
+		}
+		set
+		{
+			if ((this._err_desc != value))
+			{
+				this.Onerr_descChanging(value);
+				this.SendPropertyChanging();
+				this._err_desc = value;
+				this.SendPropertyChanged("err_desc");
+				this.Onerr_descChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+	
+	private void Initialize()
+	{
+		OnCreated();
+	}
+	
+	[OnDeserializing()]
+	[System.ComponentModel.EditorBrowsableAttribute(EditorBrowsableState.Never)]
+	public void OnDeserializing(StreamingContext context)
+	{
+		this.Initialize();
 	}
 }
 

@@ -1,63 +1,98 @@
-﻿var $oEventsTable, $oCurrTable, $oCurrPairTable;
-var $sEventsAddRowForm, $sCurrenciesAddRowForm, $sCurrencyPairsAddRowForm, $sCurrSelect;
+﻿var $oFXEventsTable, $oFXEventAliasesTable, $oCurrTable, $oCurrPairTable;
+var $sFXEventsAddRowForm, $sFXEventAliasesAddRowForm, $sCurrenciesAddRowForm, $sCurrencyPairsAddRowForm, $sCurrSelect;
 
 $(document).ready(function() {
   bindFXEventsControls();
-  getEvents();
+
+  getFXEvents();
+  getFXEventAliases();
   getCurrencies();
   getCurrencyPairs();
   getCurrencySelect();
-  getEventsAddFormRow();
+  getFXEventsAddFormRow();
+  getFXEventAliasesAddFormRow();
   getCurrenciesAddFormRow();
   getCurrencyPairsAddFormRow();
 });
 
 /**
- * function: getEvents()
+ * function: getFXEvents()
  * Load event list html block from server
  */
-function getEvents() {
-  $.post("request.aspx", { a: "getEvents" }, function(response) {
-    $("#eventlist").html("").append(response);
-    $oEventsTable = $("#eventlistTable").dataTable();
+function getFXEvents() {
+  $.post("request.aspx", { a: "getFXEvents" }, function(response) {
+    $("#fxeventlist").html("").append(response);
+    $oFXEventsTable = $("#fxeventlistTable").dataTable();
   });
 }
 
 /**
-* function: getEventAddFormRow()
+* function: getFXEventAddFormRow()
 * Load currency pair list html select block from server
 */
-function getEventsAddFormRow() {
-  $.post("request.aspx", { a: "getEventsAddFormRow" }, function(response) {
-    $sEventsAddRowForm = response.replace(/<\?xml(?:.|\s)*?>/g, "").replace(/\"/g, "'");
+function getFXEventsAddFormRow() {
+  $.post("request.aspx", { a: "getFXEventsAddFormRow" }, function(response) {
+    $sFXEventsAddRowForm = response.replace(/<\?xml(?:.|\s)*?>/g, "").replace(/\"/g, "'");
   });
 }
 
 /**
- * function: addEvent()
- * Add new event row to database
+* function: delFXEvents()
+* Delete selected events from server
+*/
+function delFXEvents(v, m, f) {
+  var aEvtids = [];
+  if (v) { // If we clicked OK...
+    // Build the list of checked checkboxes into a string that will be passed to the web service.
+    $("#fxeventlist input[type=checkbox]:checked").each(
+      function(index) {
+        aEvtids.push($(this).val());
+      }
+    );
+    // Send those events to Hell.
+    $.post("request.aspx", { a: "delFXEvents", "evtids": aEvtids.join() }, function(response) {
+      $.prompt(response);
+      getFXEvents();
+    });
+  }
+}
+
+/**
+ * function: delFXEvents_Verify()
+ * Verify deletions before sending request to server.
  */
-function addEvent(obj) {
-  var curr = $('#eventlistTable #curr').val();
-  var eventid = $('#eventlistTable #eventid').val();
-  var eventname = $('#eventlistTable #name').val();
-  var next_date = $('#eventlistTable #next_date').val();
-  var recurring = $('#eventlistTable #recurring').val();
-  var previous = $('#eventlistTable #previous').val();
-  var importance = $('#eventlistTable #importance').val();
-  var watch = $('#eventlistTable #watch').val();
+function delFXEvents_Verify() {
+  $.prompt("Do you really want to delete these events? This action is permanent.", {
+  submit: delFXEvents,
+  buttons: { Ok: true, Cancel: false }
+  });
+}
+
+/**
+* function: addFXEvent()
+* Add new event row to database
+*/
+function addFXEvent(obj) {
+  var curr = $('#fxeventlistTable #curr').val();
+  var eventid = $('#fxeventlistTable #eventid').val();
+  var eventname = $('#fxeventlistTable #name').val();
+  var next_date = $('#fxeventlistTable #next_date').val();
+  var recurring = $('#fxeventlistTable #recurring').val();
+  var previous = $('#fxeventlistTable #previous').val();
+  var importance = $('#fxeventlistTable #importance').val();
+  var watch = $('#fxeventlistTable #watch').val();
   $.prompt('Click OK to confirm adding forex event ' + eventid + ' (' + eventname + ').', { buttons: { Ok: true, Cancel: false },
     callback: function(v, m, f) {
       if (v) {
-        $.post("request.aspx", { "a": "addEvent", "curr": curr, "eventid": eventid, "name": eventname, "next_date": next_date, "recurring": recurring, "previous": previous, "importance": importance, "watch": watch }, function(response) {
+        $.post("request.aspx", { "a": "addFXEvent", "curr": curr, "eventid": eventid, "name": eventname, "next_date": next_date, "recurring": recurring, "previous": previous, "importance": importance, "watch": watch }, function(response) {
           // Server response
           $.prompt(response);
           // Refresh table
-          getEvents();
+          getFXEvents();
           // Enable add control, hide save control
-          $("#saveEventNew").hide('fast');
-          $("#cancelEventNew").hide('fast');
-          $("#addEventsTableRow").show('slow');
+          $("#saveFXEventNew").hide('fast');
+          $("#cancelFXEventNew").hide('fast');
+          $("#addFXEventsTableRow").show('slow');
         });
       }
     }
@@ -65,39 +100,145 @@ function addEvent(obj) {
 }
 
 /**
- * function: fnClickAddEventRow()
+ * function: fnClickAddFXEventRow()
  * Adds row to the Eventss HTML table.
  */
-function fnClickAddEventsRow() {
+function fnClickAddFXEventsRow() {
   // Append it to the Events table.
   //$oEventsTable.fnAddData($aEventRowElements);
-  $('#eventlistTable tbody tr:first').before($sEventsAddRowForm);
-  $('#eventlistTable #curr').parent().html("").append($sCurrSelect);
+  $('#fxeventlistTable tbody tr:first').before($sFXEventsAddRowForm);
+  $('#fxeventlistTable #curr').parent().html("").append($sCurrSelect);
   // Bind date control to next_date input field
   $(function() {
     $("#next_date").datepicker();
   });
   // Focus on the first form element.
-  $('#eventlistTable #eventid').focus();
+  $('#fxeventlistTable #eventid').focus();
   // Enable save control, hide add control
-  $("#addEventsTableRow").hide('fast');
-  $("#saveEventNew").show('slow');
-  $("#cancelEventNew").show('slow');
+  $("#addFXEventsTableRow").hide('fast');
+  $("#saveFXEventNew").show('slow');
+  $("#cancelFXEventNew").show('slow');
 }
 
 /**
-* function: fnClickDelEventsRow()
+* function: fnClickDelFXEventsRow()
 * Adds row to the Events HTML table.
 */
-function fnClickDelEventsRow() {
+function fnClickDelFXEventsRow() {
   // Remove first row in currency pair table
-  $('#eventlistTable tbody tr:first').remove();
+  $('#fxeventlistTable tbody tr:first').remove();
   // Enable add control, hide save control
-  $("#saveEventNew").hide('fast');
-  $("#cancelEventNew").hide('fast');
-  $("#addEventsTableRow").show('slow');
+  $("#saveFXEventNew").hide('fast');
+  $("#cancelFXEventNew").hide('fast');
+  $("#addFXEventsTableRow").show('slow');
 }
- 
+
+/**
+* function: getFXEventAliases()
+* Load event alias list html block from server
+*/
+function getFXEventAliases() {
+  $.post("request.aspx", { a: "getFXEventAliases" }, function(response) {
+    $("#fxeventaliaslist").html("").append(response);
+    $oFXEventAliasesTable = $("#fxeventaliaslistTable").dataTable();
+  });
+}
+
+/**
+* function: getFXEventAliasesAddFormRow()
+* Load event alias list html select block from server
+*/
+function getFXEventAliasesAddFormRow() {
+  $.post("request.aspx", { a: "getFXEventAliasesAddFormRow" }, function(response) {
+    $sFXEventAliasesAddRowForm = response.replace(/<\?xml(?:.|\s)*?>/g, "").replace(/\"/g, "'");
+  });
+}
+
+/**
+* function: delFXEventAliases()
+* Delete selected event aliases from server
+*/
+function delFXEventAliases(v, m, f) {
+  var aEvtids = [];
+  if (v) { // If we clicked OK...
+    // Build the list of checked checkboxes into a string that will be passed to the web service.
+    $("#fxeventaliaslist input[type=checkbox]:checked").each(
+      function(index) {
+        aEvtids.push($(this).val());
+      }
+    );
+    // Send those events to Hell.
+    $.post("request.aspx", { a: "delFXEventAliases", "evtids": aEvtids.join() }, function(response) {
+      $.prompt(response);
+      getFXEventAliases();
+    });
+  }
+}
+
+/**
+* function: delFXEventAliases_Verify()
+* Verify deletions before sending request to server.
+*/
+function delFXEventAliases_Verify() {
+  $.prompt("Do you really want to delete these event aliases? This action is permanent.", {
+    submit: delFXEventAliases,
+    buttons: { Ok: true, Cancel: false }
+  });
+}
+
+/**
+* function: addFXEventAlias()
+* Add new event alias row to database
+*/
+function addFXEventAlias(obj) {
+  var eventid = $('#fxeventaliaslistTable #eventid').val();
+  var name = $('#fxeventaliaslistTable #name').val();
+  $.prompt('Click OK to confirm adding forex event alias ' + eventid + ' (' + name + ').', { buttons: { Ok: true, Cancel: false },
+    callback: function(v, m, f) {
+      if (v) {
+        $.post("request.aspx", { "a": "addFXEventAlias", "eventid": eventid, "name": eventname }, function(response) {
+          // Server response
+          $.prompt(response);
+          // Refresh table
+          getFXEventAliases();
+          // Enable add control, hide save control
+          $("#saveFXEventAliasNew").hide('fast');
+          $("#cancelFXEventAliasNew").hide('fast');
+          $("#addFXEventAliasesTableRow").show('slow');
+        });
+      }
+    }
+  });
+}
+
+/**
+* function: fnClickAddFXEventAliasesRow()
+* Adds row to the FXEventAliases HTML table.
+*/
+function fnClickAddFXEventAliasesRow() {
+  // Append it to the EventAliases table.
+  $('#fxeventaliaslistTable tbody tr:first').before($sFXEventAliasesAddRowForm);
+  // Focus on the first form element.
+  $('#fxeventaliaslistTable #eventid').focus();
+  // Enable save control, hide add control
+  $("#addFXEventAliasesTableRow").hide('fast');
+  $("#saveFXEventAliasNew").show('slow');
+  $("#cancelFXEventAliasNew").show('slow');
+}
+
+/**
+* function: fnClickFXDelEventAliasesRow()
+* Adds row to the FXEventAliases  HTML table.
+*/
+function fnClickDelFXEventAliasesRow() {
+  // Remove first row in event alias table
+  $('#fxeventaliaslistTable tbody tr:first').remove();
+  // Enable add control, hide save control
+  $("#saveFXEventAliasNew").hide('fast');
+  $("#cancelFXEventAliasNew").hide('fast');
+  $("#addFXEventAliasesTableRow").show('slow');
+}
+
 /**
 * function: getCurrencies()
 * Load currency list html block from server
@@ -108,6 +249,7 @@ function getCurrencies() {
     $oCurrTable = $("#currencylistTable").dataTable();
   });
 }
+
 /**
 * function: getCurrencyAddFormRow()
 * Load currency html form elements table row from server
@@ -126,6 +268,38 @@ function getCurrencySelect() {
   $.post("request.aspx", { a: "getCurrencySelect" }, function(response) {
     //$aEventRowElements[0] = response.replace(/<\?xml(?:.|\s)*?>/g, "").replace(/\"/g, "'");
     $sCurrSelect = response.replace(/<\?xml(?:.|\s)*?>/g, "");
+  });
+}
+
+/**
+* function: delCurrencies()
+* Delete selected events from server
+*/
+function delCurrencies(v, m, f) {
+  var aEvtids = [];
+  if (v) { // If we clicked OK...
+    // Build the list of checked checkboxes into a string that will be passed to the web service.
+    $("#currencylist input[type=checkbox]:checked").each(
+      function(index) {
+        aEvtids.push($(this).val());
+      }
+    );
+    // Send those currencies to Hell.
+    $.post("request.aspx", { a: "delCurrencies", "evtids": aEvtids.join() }, function(response) {
+      $.prompt(response);
+      getCurrencies();
+    });
+  }
+}
+
+/**
+* function: delCurrencies_Verify()
+* Verify deletions before sending request to server.
+*/
+function delCurrencies_Verify() {
+  $.prompt("Do you really want to delete these currencies? This action is permanent.", {
+    submit: delCurrencies,
+    buttons: { Ok: true, Cancel: false }
   });
 }
 
@@ -206,6 +380,38 @@ function getCurrencyPairsAddFormRow() {
 }
 
 /**
+* function: delCurrencyPairs()
+* Delete selected Currency Pairs from server
+*/
+function delCurrencyPairs(v, m, f) {
+  var aEvtids = [];
+  if (v) { // If we clicked OK...
+    // Build the list of checked checkboxes into a string that will be passed to the web service.
+    $("#currencypairlist input[type=checkbox]:checked").each(
+      function(index) {
+        aEvtids.push($(this).val());
+      }
+    );
+    // Send those events to Hell.
+    $.post("request.aspx", { a: "delCurrencyPairs", "evtids": aEvtids.join() }, function(response) {
+      $.prompt(response);
+      getCurrencyPairs();
+    });
+  }
+}
+
+/**
+* function: delCurrencyPairs_Verify()
+* Verify deletions before sending request to server.
+*/
+function delCurrencyPairs_Verify() {
+  $.prompt("Do you really want to delete these currency pairs? This action is permanent.", {
+    submit: delCurrencyPairs,
+    buttons: { Ok: true, Cancel: false }
+  });
+}
+
+/**
 * function: addCurrencyPair()
 * Add new event row to database
 */
@@ -270,32 +476,74 @@ function fnClickDelCurrencyPairsRow() {
 */
 function bindFXEventsControls() {
   // Control to get events
-  $("#getEvents").live("click", function() {
-    getEvents();
+  $("#getFXEvents").live("click", function() {
+    getFXEvents();
+    return false;
+  });
+
+  // Control to delete events
+  $("#delFXEvents").live("click", function() {
+  delFXEvents_Verify(this);
     return false;
   });
 
   // Control to add event
-  $("#saveEventNew").live("click", function() {
-    addEvent(this);
+  $("#saveFXEventNew").live("click", function() {
+    addFXEvent(this);
     return false;
   });
 
   // Control to cancel new currency
-  $("#cancelEventNew").live("click", function() {
-    fnClickDelEventsRow(this);
+  $("#cancelFXEventNew").live("click", function() {
+    fnClickDelFXEventsRow(this);
     return false;
   });
 
   // Control to add FXEvent table row
-  $("#addEventsTableRow").live("click", function() {
-    fnClickAddEventsRow();
+  $("#addFXEventsTableRow").live("click", function() {
+    fnClickAddFXEventsRow();
+    return false;
+  });
+  
+  // Control to get event aliases
+  $("#getFXEventAliases").live("click", function() {
+    getFXEventAliases();
     return false;
   });
 
+  // Control to delete event alias
+  $("#delFXEventAliases").live("click", function() {
+    delFXEventAliases_Verify(this);
+    return false;
+  });
+
+  // Control to add event alias
+  $("#saveFXEventAliasNew").live("click", function() {
+    addFXEventAlias(this);
+    return false;
+  });
+
+  // Control to cancel new alias
+  $("#cancelFXEventAliasNew").live("click", function() {
+    fnClickDelFXEventAliasesRow(this);
+    return false;
+  });
+
+  // Control to add FXEvent_Alias table row
+  $("#addFXEventAliasesTableRow").live("click", function() {
+    fnClickAddFXEventAliasesRow();
+    return false;
+  });
+  
   // Control to get currencies
   $("#getCurrencies").live("click", function() {
     getCurrencies();
+    return false;
+  });
+
+  // Control to delete currencies
+  $("#delCurrencies").live("click", function() {
+    delCurrencies_Verify(this);
     return false;
   });
 
@@ -320,6 +568,12 @@ function bindFXEventsControls() {
   // Control to get currencies
   $("#getCurrencyPairs").live("click", function() {
     getCurrencyPairs();
+    return false;
+  });
+
+  // Control to delete currency pairs
+  $("#delCurrencyPairs").live("click", function() {
+    delCurrencyPairs_Verify(this);
     return false;
   });
 

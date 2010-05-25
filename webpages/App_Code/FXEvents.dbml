@@ -60,9 +60,10 @@
     <Type Name="fxevent_alias">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="event_name" Storage="_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="err_no" Type="System.Int32" CanBeNull="false" />
       <Column Name="err_desc" Type="System.String" CanBeNull="false" />
+      <Column Name="alias_name" Type="System.String" CanBeNull="false" />
       <Association Name="fxevent_fxevent_alias" Member="fxevent" ThisKey="eventid" OtherKey="eventid" Type="fxevent" IsForeignKey="true" />
     </Type>
     <InsertFunction FunctionId="FunctionId5">
@@ -196,6 +197,40 @@
       <Argument Parameter="err_desc" Member="err_desc" />
     </InsertFunction>
     <DeleteFunction FunctionId="FunctionId14">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </DeleteFunction>
+  </Table>
+  <Table Name="dbo.vFX_EventsStaging" Member="fxevent_stagings">
+    <Type Name="fxevent_staging">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="eventid" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="recurring" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="next_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="next_time" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="importance" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="previous" Type="System.Decimal" DbType="Decimal(19,5)" CanBeNull="true" />
+      <Column Name="watch" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Column Name="err_no" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="err_desc" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+    </Type>
+    <InsertFunction FunctionId="FunctionId15">
+      <Argument Parameter="eventid" Member="eventid" />
+      <Argument Parameter="name" Member="name" />
+      <Argument Parameter="recurring" Member="recurring" />
+      <Argument Parameter="next_date" Member="next_date" />
+      <Argument Parameter="next_time" Member="next_time" />
+      <Argument Parameter="importance" Member="importance" />
+      <Argument Parameter="previous" Member="previous" />
+      <Argument Parameter="watch" Member="watch" />
+      <Argument Parameter="currency" Member="currency" />
+      <Argument Parameter="err_no" Member="err_no" />
+      <Argument Parameter="err_desc" Member="err_desc" />
+    </InsertFunction>
+    <DeleteFunction FunctionId="FunctionId16">
       <Argument Parameter="eventid" Member="eventid" />
       <Argument Parameter="err_no" Member="err_no" />
       <Argument Parameter="err_desc" Member="err_desc" />
@@ -415,5 +450,25 @@
       <Column Name="actual" Type="System.Decimal" DbType="Decimal(0,0)" CanBeNull="true" />
       <Column Name="currency" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
     </ElementType>
+  </Function>
+  <Function Id="FunctionId16" Name="dbo.spFX_DelEventStaging" Method="DelEventStaging">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Id="FunctionId15" Name="dbo.spFX_AddEventStaging" Method="AddEventStaging">
+    <Parameter Name="eventid" Type="System.String" DbType="NVarChar(10)" />
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="recurring" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="next_date" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="next_time" Type="System.TimeSpan" DbType="Time" />
+    <Parameter Name="importance" Type="System.Int16" DbType="SmallInt" />
+    <Parameter Name="previous" Type="System.Decimal" DbType="Decimal" />
+    <Parameter Name="watch" Type="System.Byte" DbType="TinyInt" />
+    <Parameter Name="currency" Type="System.String" DbType="NChar(3)" />
+    <Parameter Name="err_no" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Parameter Name="err_desc" Type="System.String" DbType="NVarChar(255)" Direction="InOut" />
+    <Return Type="System.Int32" />
   </Function>
 </Database>
